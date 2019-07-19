@@ -24,5 +24,5 @@ export default {
             this.count += 1;
         },
     },
-}
+};
 </script>
