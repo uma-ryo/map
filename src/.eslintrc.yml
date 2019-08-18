@@ -14,4 +14,13 @@ parserOptions:
 plugins:
   - vue
 rules:
-  indent: ["error", 4]
+  indent:
+    - error
+    - 4
+  no-param-reassign:
+    - error
+    - props: true
+      ignorePropertyModificationsFor:
+        - state
+  max-len:
+    - warn

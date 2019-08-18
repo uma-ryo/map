@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 module.exports = {
     target: 'web',
@@ -24,13 +25,28 @@ module.exports = {
                 ],
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        '@babel/preset-env',
-                    ],
-                },
+                test: /\.s(a|c)ss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+            // {
+            //     test: /\.js$/,
+            //     loader: 'babel-loader',
+            //     options: {
+            //         presets: [
+            //             '@babel/preset-env',
+            //         ],
+            //         plugins: [
+            //             ['@babel/plugin-transform-runtime', { corejs: 2 }],
+            //         ],
+            //     },
+            // },
+            {
+                test: /\.(svg|eot|ttf|woff|woff2)(\?.*)?$/,
+                loader: 'url-loader',
             },
             {
                 enforce: 'pre',
@@ -50,5 +66,6 @@ module.exports = {
         }),
         new HtmlWebpackInlineSourcePlugin(),
         new VueLoaderPlugin(),
+        new VuetifyLoaderPlugin(),
     ],
 };
