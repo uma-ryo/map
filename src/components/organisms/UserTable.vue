@@ -20,10 +20,6 @@
                 itemsPerPageText: '',
             }"
         ></v-data-table>
-        <v-btn
-            @click="log"
-        >
-        </v-btn>
     </v-card>
 </template>
 
@@ -53,11 +49,6 @@ export default {
         ...mapState([
             'csInfo',
         ]),
-    },
-    methods: {
-        log() {
-            console.log(this.csInfo);
-        },
     },
 };
 </script>
