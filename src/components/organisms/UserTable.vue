@@ -13,7 +13,7 @@
         <v-data-table
             :mobile-breakpoint="0"
             :headers="headers"
-            :items="csInfo"
+            :items="users"
             :search="search"
             :footer-props="{
                 itemsPerPageOptions: [10, -1],
@@ -38,16 +38,16 @@ export default {
         return {
             search: '',
             headers: [
-                { text: 'No', value: 'user1Id' },
-                { text: 'あなたのお名前', value: 'user1' },
-                { text: '得点', value: 'user1Mp' },
-                { text: '備考', value: 'user1Note' },
+                { text: 'No', value: 'id' },
+                { text: 'あなたのお名前', value: 'name' },
+                { text: '得点', value: 'mp' },
+                { text: '備考', value: 'note' },
             ],
         };
     },
     computed: {
         ...mapState([
-            'csInfo',
+            'users',
         ]),
     },
 };
