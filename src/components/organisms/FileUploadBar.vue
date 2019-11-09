@@ -34,6 +34,7 @@
 
 <script>
 import axios from 'axios';
+import csvParse from 'csv-parse/lib/sync';
 import { mapState } from 'vuex';
 
 export default {
@@ -46,6 +47,22 @@ export default {
     data() {
         return {
             file: '',
+            csvColumns: [
+                'round',
+                'table',
+                'user1No',
+                'user1Name',
+                'user1Kana',
+                'user1Id',
+                'user1Note',
+                'user2No',
+                'user2Name',
+                'user2Kana',
+                'user2Id',
+                'user2Note',
+                'user1Mp',
+                'user2Mp',
+            ],
         };
     },
     computed: {
@@ -63,12 +80,43 @@ export default {
         async uploadFile() {
             const csv = await this.readFile(this.file);
 
-            const url = `https://${this.apiDomain}/${this.apiVersion}/set-cs-info`;
-            const data = await axios.post(url, JSON.stringify({
-                csvString: csv,
-            }));
+            const data = await Promise.all([
+                axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-cs-info`, JSON.stringify({
+                    matches: this.parseToCompetitionTable(csv),
+                })),
+                axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-users`, JSON.stringify({
+                    users: this.parseToUsers(csv),
+                })),
+            ]);
 
             console.log(data);
+        },
+        parseToCompetitionTable(csv) {
+            return csv.map((line) => ({
+                round: line.round,
+                table: line.table,
+                user1: line.user1Name,
+                user2: line.user2Name,
+                noteFlag: !!line.user1Note && !!line.user2Note,
+            }));
+        },
+        parseToUsers(csv) {
+            return csv.flatMap((line) => [
+                {
+                    id: line.user1Id,
+                    name: line.user1Name,
+                    kana: line.user1Kana,
+                    mp: line.user1Mp,
+                    note: line.user1Note,
+                },
+                {
+                    id: line.user2Id,
+                    name: line.user2Name,
+                    kana: line.user2Kana,
+                    mp: line.user2Mp,
+                    note: line.user2Note,
+                },
+            ]);
         },
         readFile(file) {
             return new Promise((resolve, reject) => {
@@ -77,7 +125,8 @@ export default {
                 reader.readAsText(file, 'shift_jis');
                 reader.onload = (event) => {
                     if (event && event.target && event.target.result) {
-                        resolve(event.target.result);
+                        const csv = csvParse(event.target.result, { columns: this.csvColumns }).slice(1);
+                        resolve(csv);
                     }
                     reject();
                 };

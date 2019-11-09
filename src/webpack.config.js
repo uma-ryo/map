@@ -39,24 +39,21 @@ module.exports = {
             //         presets: [
             //             '@babel/preset-env',
             //         ],
-            //         plugins: [
-            //             ['@babel/plugin-transform-runtime', { corejs: 2 }],
-            //         ],
             //     },
             // },
             {
                 test: /\.(svg|eot|ttf|woff|woff2)(\?.*)?$/,
                 loader: 'url-loader',
             },
-            {
-                enforce: 'pre',
-                test: /\.(js|vue)$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    fix: true,
-                },
-            },
+            // {
+            //     enforce: 'pre',
+            //     test: /\.(js|vue)$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint-loader',
+            //     options: {
+            //         fix: true,
+            //     },
+            // },
         ],
     },
     plugins: [
