@@ -4,9 +4,10 @@
         <v-toolbar-title>Title</v-toolbar-title>
         <v-spacer></v-spacer>  
         <v-toolbar-items>
-            <v-btn text><router-link class="route-link-text" to="/">Tables</router-link></v-btn>
+            <v-btn text><router-link class="route-link-text" to="/">Table</router-link></v-btn>
             <v-btn text><router-link class="route-link-text" to="/users">Users</router-link></v-btn>
             <v-btn v-if="!isLogin" text @click="showLoginModal()">Login</v-btn>
+            <v-btn v-else text @click="logout">Logout</v-btn>
         </v-toolbar-items>
     </v-toolbar>
 
@@ -15,7 +16,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import { LOGOUT } from '../../store/mutation_types';
 
 import LoginModal from '../organisms/LoginModal.vue';
 
@@ -32,6 +34,9 @@ export default {
         showLoginModal() {
             this.$refs.modal.show();
         },
+        ...mapMutations({
+            logout: LOGOUT,
+        }),
     },
 }
 </script>
