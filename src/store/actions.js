@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import {
+    LOGIN,
+    CHECK_AUTH_JWT,
     LOAD_COMPETITION_TABLE,
     UPDATE_COMPETITION_TABLE_LOADED_FLAG,
     LOAD_USERS,
@@ -8,6 +10,21 @@ import {
 } from './mutation_types';
 
 export default {
+    async [CHECK_AUTH_JWT](context) {
+        const jwt = localStorage.getItem('authJwt');
+        if (jwt) {
+            try {
+                const response = await axios.post(`https://${context.state.apiDomain}/${context.state.apiVersion}/is-authed`, JSON.stringify({
+                    jwt,
+                }));
+                if (response.status === 200) {
+                    context.commit(CHECK_AUTH_JWT);
+                }
+            } catch (error) {
+                console.error('auth failed');
+            }
+        }
+    },
     async [LOAD_COMPETITION_TABLE](context) {
         const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-cs-info?admin=admin`);
         if (response.status === 200) {

@@ -1,9 +1,6 @@
 <template>
     <v-app>
-        <div>
-            <router-link to="/">Top</router-link>
-            <router-link to="/users">Users</router-link>
-        </div>
+        <Header />
         <router-view />
     </v-app>
 </template>
@@ -11,16 +8,21 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import {
+    CHECK_AUTH_JWT,
     LOAD_COMPETITION_TABLE,
     LOAD_USERS,
-    UPDATE_COMPETITION_TABLE_LOADED_FLAG,
-    UPDATE_USERS_LOADED_FLAG,
 } from './store/mutation_types';
 
+import Header from './components/organisms/Header.vue';
+
 export default {
+    components: {
+        Header,
+    },
     created() {
         this.loadCompetitionTableAsync();
         this.loadUsersAsync();
+        this.checkAuthJwt();
     },
     computed: {
         ...mapState([
@@ -30,19 +32,18 @@ export default {
     },
     methods: {
         ...mapActions({
+            checkAuthJwt: CHECK_AUTH_JWT,
             loadCompetitionTableAsync: LOAD_COMPETITION_TABLE,
             loadUsersAsync: LOAD_USERS,
-            updateCompetitionTableLoadedFlag: UPDATE_COMPETITION_TABLE_LOADED_FLAG,
-            updateUsersLoadedFlag: UPDATE_USERS_LOADED_FLAG,
         }),
     },
     watch: {
         $route() {
             if (!this.isCompetitionTableLoaded) {
-                this.updateCompetitionTableLoadedFlag();
+                this.loadCompetitionTableAsync();
             }
             if (!this.isUsersLoaded) {
-                this.updateUsersLoadedFlag();
+                this.loadUsersAsync();
             }
         },
     },

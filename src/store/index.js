@@ -9,8 +9,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        apiDomain: '32tz1gg2v9.execute-api.ap-northeast-1.amazonaws.com/dev',
+        apiDomain: 'm3eo60jt36.execute-api.ap-northeast-1.amazonaws.com/dev',
         apiVersion: 'v1',
+        isLogin: false,
         isCompetitionTableLoaded: false,
         isUsersLoaded: false,
         csInfo: [],

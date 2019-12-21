@@ -1,3 +1,6 @@
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const CHECK_AUTH_JWT = 'CHECK_AUTH_JWT';
 export const LOAD_USERS = 'LOAD_USERS';
 export const LOAD_COMPETITION_TABLE = 'LOAD_COMPETITION_TABLE';
 export const UPDATE_USERS_LOADED_FLAG = 'UPDATE_USERS_LOADED_FLAG';
