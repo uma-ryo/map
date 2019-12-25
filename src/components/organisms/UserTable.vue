@@ -38,7 +38,7 @@ export default {
         return {
             search: '',
             headers: [
-                { text: 'No', value: 'id' },
+                { text: 'No', value: 'no' },
                 { text: 'あなたのお名前', value: 'name' },
                 { text: '得点', value: 'mp' },
                 { text: '備考', value: 'note' },
