@@ -104,6 +104,7 @@ export default {
             return csv.flatMap((line) => [
                 {
                     id: line.user1Id,
+                    no: line.user1No,
                     name: line.user1Name,
                     kana: line.user1Kana,
                     mp: line.user1Mp,
@@ -111,6 +112,7 @@ export default {
                 },
                 {
                     id: line.user2Id,
+                    no: line.user2No,
                     name: line.user2Name,
                     kana: line.user2Kana,
                     mp: line.user2Mp,
