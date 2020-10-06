@@ -1,8 +1,8 @@
 <template>
-    <v-content>
+    <v-main>
         <FileUploadBar v-if="isLogin" class="file-upload-bar" />
         <UserTable :class="{'table-spacer': !isLogin}" />
-    </v-content>
+    </v-main>
 </template>
 
 <style scoped>

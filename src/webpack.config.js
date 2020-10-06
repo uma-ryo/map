@@ -1,11 +1,12 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+    mode: process.env.NODE_ENV,
     target: 'web',
     entry: path.join(__dirname, 'main.js'),
     output: {
@@ -56,12 +57,19 @@ module.exports = {
             // },
         ],
     },
+    optimization: {
+        splitChunks: {
+            name: 'vendor',
+            chunks: 'initial',
+        }
+    },
     plugins: [
+        new Dotenv({
+            path: `.env.${process.env.NODE_ENV}`,
+        }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'template.html'),
-            inlineSource: '.js$',
         }),
-        new HtmlWebpackInlineSourcePlugin(),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin(),
     ],
