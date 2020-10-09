@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development",
-    "build:pr": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "build": "cross-env NODE_ENV=development webpack",
+    "build:pr": "cross-env NODE_ENV=production webpack",
+    "watch": "cross-env NODE_ENV=development webpack --watch"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +27,9 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "babel-loader": "^8.0.6",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
+    "dotenv-webpack": "^2.0.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-loader": "^2.2.1",
