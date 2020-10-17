@@ -10,4 +10,8 @@ export default [
         path: '/users',
         component: Users,
     },
+    {
+        path: '/result',
+        component: Result,
+    },
 ];
