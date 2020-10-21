@@ -3,10 +3,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-    mode: process.env.NODE_ENV,
     target: 'web',
     entry: path.join(__dirname, 'main.js'),
     output: {
@@ -19,42 +19,17 @@ module.exports = {
                 loader: 'vue-loader',
             },
             {
-                test: /\.css$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    'vue-style-loader',
-                    'css-loader',
-                ],
-            },
-            {
-                test: /\.s(a|c)ss$/,
-                use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                 ],
             },
-            // {
-            //     test: /\.js$/,
-            //     loader: 'babel-loader',
-            //     options: {
-            //         presets: [
-            //             '@babel/preset-env',
-            //         ],
-            //     },
-            // },
             {
                 test: /\.(svg|eot|ttf|woff|woff2)(\?.*)?$/,
                 loader: 'url-loader',
             },
-            // {
-            //     enforce: 'pre',
-            //     test: /\.(js|vue)$/,
-            //     exclude: /node_modules/,
-            //     loader: 'eslint-loader',
-            //     options: {
-            //         fix: true,
-            //     },
-            // },
         ],
     },
     optimization: {
@@ -70,6 +45,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'template.html'),
         }),
+        new MiniCssExtractPlugin(),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin(),
     ],

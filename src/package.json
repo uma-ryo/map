@@ -4,18 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=development webpack",
-    "build:pr": "cross-env NODE_ENV=production webpack",
-    "watch": "cross-env NODE_ENV=development webpack --watch"
+    "build": "cross-env NODE_ENV=development webpack --mode production",
+    "build:pr": "cross-env NODE_ENV=production webpack --mode production",
+    "watch": "cross-env NODE_ENV=development webpack --watch --mode development"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mdi/font": "^3.9.97",
+    "@mdi/js": "^5.7.55",
     "axios": "^0.19.0",
     "csv-parse": "^4.6.5",
-    "material-design-icons": "^3.0.1",
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
     "vuetify": "^2.0.5",
@@ -36,8 +35,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-vue": "^5.2.3",
     "html-loader": "^0.5.5",
-    "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^1.0.0",
     "sass": "^1.22.9",
     "sass-loader": "^7.2.0",
     "url-loader": "^2.1.0",
