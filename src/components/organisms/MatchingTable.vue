@@ -19,7 +19,7 @@
                 <v-spacer></v-spacer>
                 <v-text-field
                     v-model="search"
-                    append-icon="search"
+                    :append-icon="searchIcon"
                     label="Search"
                     single-line
                 ></v-text-field>
@@ -55,10 +55,12 @@
 
 <script>
 import { mapState } from 'vuex';
+import { mdiMagnify } from '@mdi/js';
 
 export default {
     data() {
         return {
+            searchIcon: mdiMagnify,
             search: '',
             round: 1,
             headers: [
