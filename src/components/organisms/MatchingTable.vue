@@ -75,9 +75,15 @@ export default {
             'csInfo',
         ]),
         filteredCSInfo() {
+            if (!this.csInfo) {
+                return [];
+            }
             return this.csInfo.filter(matching => matching.round === this.round);
         },
         roundNumber() {
+            if (!this.csInfo) {
+                return [];
+            }
             return this.csInfo
                 .map(matching => matching.round)
                 .filter((round, index, array) => array.indexOf(round) === index)

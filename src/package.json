@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=development webpack --mode production",
     "build:pr": "cross-env NODE_ENV=production webpack --mode production",
-    "watch": "cross-env NODE_ENV=development webpack --watch --mode development"
+    "watch": "cross-env NODE_ENV=development webpack-dev-server --mode development"
   },
   "keywords": [],
   "author": "",
@@ -43,6 +43,7 @@
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.11.0"
   }
 }

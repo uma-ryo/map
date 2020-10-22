@@ -49,4 +49,7 @@ module.exports = {
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin(),
     ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+    },
 };
