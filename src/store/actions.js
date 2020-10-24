@@ -25,7 +25,6 @@ export default {
         }
     },
     async [LOAD_COMPETITION_TABLE](context, admin) {
-        console.log(admin);
         const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-cs-info${admin ? `?admin=${admin}` : ''}`);
         if (response.status === 200) {
             const { csInfo } = JSON.parse(response.data);

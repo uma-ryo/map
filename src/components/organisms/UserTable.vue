@@ -1,17 +1,16 @@
 <template>
     <v-card class="users-table">
         <v-card-title>
-            Users
+            参加者
             <v-spacer></v-spacer>
             <v-text-field
                 v-model="search"
                 :append-icon="searchIcon"
-                label="Search"
+                label="検索"
                 single-line
             ></v-text-field>
         </v-card-title>
         <v-data-table
-            :mobile-breakpoint="0"
             :headers="headers"
             :items="users"
             :search="search"
@@ -25,7 +24,7 @@
 
 <style scoped>
 .users-table {
-    margin: 0 4%;
+    margin: 0 4% 30px;
 }
 </style>
 
@@ -42,7 +41,6 @@ export default {
                 { text: 'No', value: 'no' },
                 { text: 'あなたのお名前', value: 'name' },
                 { text: '得点', value: 'mp' },
-                { text: '備考', value: 'note' },
             ],
         };
     },

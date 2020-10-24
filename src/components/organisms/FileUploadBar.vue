@@ -11,7 +11,7 @@
             :color="'primary'"
             @click="uploadFile"
         >
-            UPLOAD
+            更新
         </v-btn>
         <div v-if="isUploading" class="overlay">
             <div class="circular-bg">
@@ -37,7 +37,7 @@
     position: relative;
     top: 12px;
     width: 20%;
-    font-size: 1.5vw;
+    font-size: 1rem;
     font-weight: bold;
 }
 .overlay {
@@ -60,7 +60,8 @@
 <script>
 import axios from 'axios';
 import csvParse from 'csv-parse/lib/sync';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { LOAD_COMPETITION_TABLE, LOAD_USERS } from '../../store/mutation_types';
 
 export default {
     props: {
@@ -101,6 +102,10 @@ export default {
         },
     },
     methods: {
+        ...mapActions({
+            loadCompetitionTableAsync: LOAD_COMPETITION_TABLE,
+            loadUsersAsync: LOAD_USERS,
+        }),
         fileUpdate(file) {
             if (file) {
                 this.file = file;
@@ -123,6 +128,8 @@ export default {
                         users: this.parseToUsers(csv),
                     })),
                 ]);
+                this.loadCompetitionTableAsync(this.$route.query.admin);
+                this.loadUsersAsync(this.$route.query.admin);
             } catch {
                 console.error('failed get csinfo or users');
             } finally {
