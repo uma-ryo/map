@@ -13,6 +13,16 @@
         >
             UPLOAD
         </v-btn>
+        <div v-if="isUploading" class="overlay">
+            <div class="circular-bg">
+                <v-progress-circular
+                    indeterminate
+                    color="primary"
+                    :size="100"
+                    :width="7"
+                ></v-progress-circular>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -29,6 +39,21 @@
     width: 20%;
     font-size: 1.5vw;
     font-weight: bold;
+}
+.overlay {
+    position: absolute;
+    top: 15vh;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.circular-bg {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5vw;
+    border-radius: 3px;
 }
 </style>
 
@@ -47,6 +72,7 @@ export default {
     data() {
         return {
             file: '',
+            isUploading: false,
             csvColumns: [
                 'round',
                 'table',
@@ -70,6 +96,9 @@ export default {
             'apiDomain',
             'apiVersion',
         ]),
+        admin() {
+            return this.$route.query.admin;
+        },
     },
     methods: {
         fileUpdate(file) {
@@ -78,18 +107,27 @@ export default {
             }
         },
         async uploadFile() {
+            if (!this.file) {
+                return;
+            }
+            this.isUploading = true;
             const csv = await this.readFile(this.file);
-
-            const data = await Promise.all([
-                axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-cs-info`, JSON.stringify({
-                    matches: this.parseToCompetitionTable(csv),
-                })),
-                axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-users`, JSON.stringify({
-                    users: this.parseToUsers(csv),
-                })),
-            ]);
-
-            console.log(data);
+            try {
+                await Promise.all([
+                    axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-cs-info`, JSON.stringify({
+                        admin: this.admin,
+                        matches: this.parseToCompetitionTable(csv),
+                    })),
+                    axios.post(`https://${this.apiDomain}/${this.apiVersion}/set-users`, JSON.stringify({
+                        admin: this.admin,
+                        users: this.parseToUsers(csv),
+                    })),
+                ]);
+            } catch {
+                console.error('failed get csinfo or users');
+            } finally {
+                this.isUploading = false;
+            }
         },
         parseToCompetitionTable(csv) {
             return csv.map((line) => ({

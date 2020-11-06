@@ -20,8 +20,6 @@ export default {
         Header,
     },
     created() {
-        this.loadCompetitionTableAsync();
-        this.loadUsersAsync();
         this.checkAuthJwt();
     },
     computed: {
@@ -40,10 +38,10 @@ export default {
     watch: {
         $route() {
             if (!this.isCompetitionTableLoaded) {
-                this.loadCompetitionTableAsync();
+                this.loadCompetitionTableAsync(this.$route.query.admin);
             }
             if (!this.isUsersLoaded) {
-                this.loadUsersAsync();
+                this.loadUsersAsync(this.$route.query.admin);
             }
         },
     },

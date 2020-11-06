@@ -1,11 +1,10 @@
 <template>
     <div>
     <v-toolbar>
-        <v-toolbar-title>Title</v-toolbar-title>
         <v-spacer></v-spacer>  
         <v-toolbar-items>
-            <v-btn text><router-link class="route-link-text" to="/">Table</router-link></v-btn>
-            <v-btn text><router-link class="route-link-text" to="/users">Users</router-link></v-btn>
+            <v-btn text><router-link class="route-link-text" :to="{ path: '/', query }">Table</router-link></v-btn>
+            <v-btn text><router-link class="route-link-text" :to="{ path: '/users', query }">Users</router-link></v-btn>
             <v-btn v-if="!isLogin" text @click="showLoginModal()">Login</v-btn>
             <v-btn v-else text @click="logout">Logout</v-btn>
         </v-toolbar-items>
@@ -29,6 +28,9 @@ export default {
         ...mapState([
             'isLogin',
         ]),
+        query() {
+            return this.$route.query;
+        },
     },
     methods: {
         showLoginModal() {

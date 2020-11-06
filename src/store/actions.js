@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-    LOGIN,
     CHECK_AUTH_JWT,
     LOAD_COMPETITION_TABLE,
     UPDATE_COMPETITION_TABLE_LOADED_FLAG,
@@ -25,16 +24,17 @@ export default {
             }
         }
     },
-    async [LOAD_COMPETITION_TABLE](context) {
-        const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-cs-info?admin=admin`);
+    async [LOAD_COMPETITION_TABLE](context, admin) {
+        console.log(admin);
+        const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-cs-info${admin ? `?admin=${admin}` : ''}`);
         if (response.status === 200) {
             const { csInfo } = JSON.parse(response.data);
             context.commit(LOAD_COMPETITION_TABLE, csInfo);
             context.commit(UPDATE_COMPETITION_TABLE_LOADED_FLAG);
         }
     },
-    async [LOAD_USERS](context) {
-        const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-users?admin=admin`);
+    async [LOAD_USERS](context, admin) {
+        const response = await axios.get(`https://${context.state.apiDomain}/${context.state.apiVersion}/get-users${admin ? `?admin=${admin}` : ''}`);
         if (response.status === 200) {
             const { users } = JSON.parse(response.data);
             context.commit(LOAD_USERS, users);
