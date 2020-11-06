@@ -54,7 +54,10 @@ export default {
     text-decoration: none;
 }
 .header-text {
-    @media screen and (max-width: 544px) {
+    @media screen and (max-width: 380px) {
+        font-size: 0.7rem;
+    }
+    @media screen and (max-width: 340px) {
         font-size: 0.5rem;
     }
 }
