@@ -27,7 +27,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(svg|eot|ttf|woff|woff2)(\?.*)?$/,
+                test: /\.(svg|eot|ttf|woff|woff2|png)(\?.*)?$/,
                 loader: 'url-loader',
             },
         ],
@@ -44,6 +44,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'template.html'),
+            favicon: path.join(__dirname, 'logo.png'),
         }),
         new MiniCssExtractPlugin(),
         new VueLoaderPlugin(),
@@ -51,5 +52,6 @@ module.exports = {
     ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
+        historyApiFallback: true,
     },
 };

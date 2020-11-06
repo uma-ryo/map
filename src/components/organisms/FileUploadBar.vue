@@ -11,7 +11,7 @@
             :color="'primary'"
             @click="uploadFile"
         >
-            UPLOAD
+            更新
         </v-btn>
         <div v-if="isUploading" class="overlay">
             <div class="circular-bg">
@@ -22,6 +22,11 @@
                     :width="7"
                 ></v-progress-circular>
             </div>
+        </div>
+        <div v-if="uploadCompleted" class="overlay">
+            <v-alert :type="alertType">
+                {{ alertMessage }}
+            </v-alert>
         </div>
     </div>
 </template>
@@ -37,7 +42,7 @@
     position: relative;
     top: 12px;
     width: 20%;
-    font-size: 1.5vw;
+    font-size: 1rem;
     font-weight: bold;
 }
 .overlay {
@@ -60,7 +65,8 @@
 <script>
 import axios from 'axios';
 import csvParse from 'csv-parse/lib/sync';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { LOAD_COMPETITION_TABLE, LOAD_USERS } from '../../store/mutation_types';
 
 export default {
     props: {
@@ -89,6 +95,9 @@ export default {
                 'user1Mp',
                 'user2Mp',
             ],
+            uploadCompleted: false,
+            alertType: 'success',
+            alertMessage: 'データを更新しました',
         };
     },
     computed: {
@@ -101,6 +110,10 @@ export default {
         },
     },
     methods: {
+        ...mapActions({
+            loadCompetitionTableAsync: LOAD_COMPETITION_TABLE,
+            loadUsersAsync: LOAD_USERS,
+        }),
         fileUpdate(file) {
             if (file) {
                 this.file = file;
@@ -123,10 +136,20 @@ export default {
                         users: this.parseToUsers(csv),
                     })),
                 ]);
+                this.loadCompetitionTableAsync(this.$route.query.admin);
+                this.loadUsersAsync(this.$route.query.admin);
+
+                this.alertType = 'success';
+                this.alertMessage = 'データを更新しました';
             } catch {
-                console.error('failed get csinfo or users');
+                this.alertType = 'error';
+                this.alertMessage = 'データの更新に失敗しました';
             } finally {
                 this.isUploading = false;
+                this.uploadCompleted = true;
+                setTimeout(() => {
+                    this.uploadCompleted = false;
+                }, 2000);
             }
         },
         parseToCompetitionTable(csv) {

@@ -5,18 +5,17 @@
         max-width="500"
       >
         <v-card>
-          <v-card-title>Login</v-card-title>
-  
+          <v-card-title>ログイン情報を入力してください</v-card-title>
           <v-card-text>
             <v-text-field
                 v-model="name"
-                label="Administer Name"
+                label="管理者名"
                 required
             ></v-text-field>
             <v-text-field
                 v-model="password"
-                label="Password"
-                :type="'password'"
+                label="パスワード"
+                type="password"
                 required
             ></v-text-field>
           </v-card-text>
@@ -24,11 +23,11 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
-              color="green darken-1"
-              text
+              color="success"
+              dark
               @click="auth"
             >
-              Login
+              ログイン
             </v-btn>
           </v-card-actions>
         </v-card>

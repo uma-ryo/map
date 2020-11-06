@@ -37,7 +37,7 @@
 - `npm run build:pr`
 
 ### 実行
-- 自動生成された `dist` 以下にある `index.html` を開く
+- `npm run watch` 後に http://localhost:8080?admin=[admin] にアクセスする
 
 # リント設定
 ### テンプレート
