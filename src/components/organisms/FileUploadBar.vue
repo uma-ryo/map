@@ -23,6 +23,11 @@
                 ></v-progress-circular>
             </div>
         </div>
+        <div v-if="uploadCompleted" class="overlay">
+            <v-alert :type="alertType">
+                {{ alertMessage }}
+            </v-alert>
+        </div>
     </div>
 </template>
 
@@ -90,6 +95,9 @@ export default {
                 'user1Mp',
                 'user2Mp',
             ],
+            uploadCompleted: false,
+            alertType: 'success',
+            alertMessage: 'データを更新しました',
         };
     },
     computed: {
@@ -130,10 +138,18 @@ export default {
                 ]);
                 this.loadCompetitionTableAsync(this.$route.query.admin);
                 this.loadUsersAsync(this.$route.query.admin);
+
+                this.alertType = 'success';
+                this.alertMessage = 'データを更新しました';
             } catch {
-                console.error('failed get csinfo or users');
+                this.alertType = 'error';
+                this.alertMessage = 'データの更新に失敗しました';
             } finally {
                 this.isUploading = false;
+                this.uploadCompleted = true;
+                setTimeout(() => {
+                    this.uploadCompleted = false;
+                }, 2000);
             }
         },
         parseToCompetitionTable(csv) {

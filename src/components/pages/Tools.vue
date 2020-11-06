@@ -1,31 +1,35 @@
 <template>
     <v-main v-if="isLogin">
-        <FileUploadBar class="file-upload-bar" />
-        <div class="qr-code-section">
+        <v-card class="tool-card">
+            <v-card-title>CSVアップロード</v-card-title>
+            <FileUploadBar class="file-upload-bar" />
+        </v-card>
+        <v-card class="tool-card qr-code-card">
+            <v-card-title>QRコード</v-card-title>
             <VueQrcode class="qr-code" :value="currentUrl" />
-        </div>
+        </v-card>
     </v-main>
 </template>
 
 <style lang="scss" scoped>
-.file-upload-bar {
-    padding: 0 10%;
-    margin-top: 2rem;
+.tool-card {
+    margin: 15px;
 }
-.qr-code-section {
-    display: flex;
-    justify-content: center;
-    align-content: center;
+.file-upload-bar {
+    padding: 0 5%;
 }
 
-.qr-code {
+.qr-code-card {
     width: 20vw;
     @media screen and (max-width: 768px) {
         width: 40vw;
     }
     @media screen and (max-width: 544px) {
-        width: 80vw;
+        width: calc(100% - 30px);
     }
+}
+.qr-code {
+    width: 100%;
 }
 </style>
 
