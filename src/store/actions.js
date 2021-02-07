@@ -9,11 +9,12 @@ import {
 } from './mutation_types';
 
 export default {
-    async [CHECK_AUTH_JWT](context) {
+    async [CHECK_AUTH_JWT](context, admin) {
         const jwt = localStorage.getItem('authJwt');
         if (jwt) {
             try {
                 const response = await axios.post(`https://${context.state.apiDomain}/${context.state.apiVersion}/is-authed`, JSON.stringify({
+                    admin,
                     jwt,
                 }));
                 if (response.status === 200) {

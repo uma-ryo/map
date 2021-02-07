@@ -19,8 +19,10 @@ export default {
     components: {
         Header,
     },
-    created() {
-        this.checkAuthJwt();
+    updated() {
+        if (this.$route.query.admin) {
+            this.checkAuthJwt(this.$route.query.admin);
+        }
     },
     computed: {
         ...mapState([
