@@ -1,5 +1,6 @@
-import Top from '../components/pages/Top.vue';
-import Users from '../components/pages/Users.vue';
+const Top = () => import('../components/pages/Top.vue');
+const Users = () => import('../components/pages/Users.vue');
+const Tools = () => import('../components/pages/Tools.vue');
 
 export default [
     {
@@ -13,5 +14,9 @@ export default [
     {
         path: '/result',
         component: Result,
+    },
+    {
+        path: '/tools',
+        component: Tools,
     },
 ];

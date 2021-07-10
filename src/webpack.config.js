@@ -1,9 +1,10 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     target: 'web',
@@ -18,51 +19,39 @@ module.exports = {
                 loader: 'vue-loader',
             },
             {
-                test: /\.css$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    'vue-style-loader',
-                    'css-loader',
-                ],
-            },
-            {
-                test: /\.s(a|c)ss$/,
-                use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                 ],
             },
-            // {
-            //     test: /\.js$/,
-            //     loader: 'babel-loader',
-            //     options: {
-            //         presets: [
-            //             '@babel/preset-env',
-            //         ],
-            //     },
-            // },
             {
-                test: /\.(svg|eot|ttf|woff|woff2)(\?.*)?$/,
+                test: /\.(svg|eot|ttf|woff|woff2|png)(\?.*)?$/,
                 loader: 'url-loader',
             },
-            // {
-            //     enforce: 'pre',
-            //     test: /\.(js|vue)$/,
-            //     exclude: /node_modules/,
-            //     loader: 'eslint-loader',
-            //     options: {
-            //         fix: true,
-            //     },
-            // },
         ],
     },
+    optimization: {
+        splitChunks: {
+            name: 'vendor',
+            chunks: 'initial',
+        }
+    },
     plugins: [
+        new Dotenv({
+            path: `.env.${process.env.NODE_ENV}`,
+        }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'template.html'),
-            inlineSource: '.js$',
+            favicon: path.join(__dirname, 'logo.png'),
         }),
-        new HtmlWebpackInlineSourcePlugin(),
+        new MiniCssExtractPlugin(),
         new VueLoaderPlugin(),
         new VuetifyLoaderPlugin(),
     ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        historyApiFallback: true,
+    },
 };

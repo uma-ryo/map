@@ -19,10 +19,10 @@ export default {
     components: {
         Header,
     },
-    created() {
-        this.loadCompetitionTableAsync();
-        this.loadUsersAsync();
-        this.checkAuthJwt();
+    updated() {
+        if (this.$route.query.admin) {
+            this.checkAuthJwt(this.$route.query.admin);
+        }
     },
     computed: {
         ...mapState([
@@ -40,10 +40,10 @@ export default {
     watch: {
         $route() {
             if (!this.isCompetitionTableLoaded) {
-                this.loadCompetitionTableAsync();
+                this.loadCompetitionTableAsync(this.$route.query.admin);
             }
             if (!this.isUsersLoaded) {
-                this.loadUsersAsync();
+                this.loadUsersAsync(this.$route.query.admin);
             }
         },
     },
